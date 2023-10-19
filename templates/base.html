@@ -1,0 +1,407 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Days+One&family=Inter:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css"/>
+
+
+</head>
+<body>
+    <header>
+        <div class="wrap">
+            <nav>
+                <ul class="logo">   
+                <li>
+                    <a href="/home/" style="text-decoration: none; color: inherit;">PILLCHAT</a>
+                </li>
+                </ul>
+                <ul class="center">
+                            <li>
+                                <a href="#">How To Use</a>
+                                <hr class="gray-line">
+                            </li>
+                            <li>
+                                <a href="#">Our Mission</a>
+                                <hr class="gray-line">
+                            </li>
+                            <li>
+                                <a href="#">FAQs</a>
+                                <hr class="gray-line">
+                            </li>
+                        </ul>
+                        <ul class="right">
+                            <li>
+                                <a href="#" class="btn log">Log in</a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn reg">Register</a>
+                            </li>
+                        </ul>
+                
+                <div class="menu-wrap">
+                    <button class="hamburger" id="home-burger">&#9776;</button>
+                    <div class="menu" id="home-menu">
+                        <ul class="center">
+                            <li>
+                                <a href="#">How To Use</a>
+                                <hr class="gray-line">
+                            </li>
+                            <li>
+                                <a href="#">Our Mission</a>
+                                <hr class="gray-line">
+                            </li>
+                            <li>
+                                <a href="#">FAQs</a>
+                                <hr class="gray-line">
+                            </li>
+                        </ul>
+                        <ul class="right">
+                            <li>
+                                <a href="#" class="btn log">Log in</a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn reg">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+            </nav>
+        </div>
+    </header>
+        <!-- End of NavBar -->
+
+        <div class="wrapper">
+            <div class="hero-section">  
+                <div class="title">
+                    
+                    Welcome to PillChat <br id="br-1"> 
+                    Your Personal Medicine Assistant
+                
+                </div>
+                <form class="form-class" action="{% url 'search_page' %}" method="GET">
+            
+                        <div id="autocompletef" class="autocomplete" >
+                        <input id="search-input-field" class="autocomplete-input" type="text" name="search" placeholder="Search Medicine Name..." value="" size="70">
+                          <ul class="autocomplete-result-list"></ul>
+                        </div>
+                        <button type="submit" onclick="handleSubmit()" id="search-button">Search</button>            
+                                    </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            <script>
+$(document).ready(function() {
+    var $menu = $('.menu');
+
+    $(".hamburger").click(function() {
+        $menu.toggleClass('show'); 
+    });
+
+    // Click event on the document
+    $(document).click(function(event) {
+        // Check if clicked outside the menu and the hamburger button
+        if (!$menu.is(event.target) && $menu.has(event.target).length === 0 && 
+            !$(".hamburger").is(event.target)) {
+            $menu.removeClass('show');
+        }
+    });
+});
+
+
+             
+
+                document.querySelector('#autocompletef').value = '';
+
+                new Autocomplete('#autocompletef', {
+                search: (input) => {
+                    const url = `/get_names/?search=${input}`;
+                    return new Promise((resolve) => {
+                        fetch(url)
+                            .then((response) => response.json())
+                            .then((data) => {
+                                resolve(data.payload);
+                            });
+                    });
+                },
+                renderResult: (result, props) => {
+                    let group = '';
+                    if (result.index % 3 === 0) {
+                        group = '<li class="group">Group</li>';
+                    }
+                    return `
+                        ${group}
+                        <li ${props} onclick="redirectToPage_dropdown('${result.ids}')">
+                            <div class="wiki-title">
+                                ${result.query}
+                            </div>
+                        </li>
+                    `;
+                },
+            });
+
+            function redirectToPage_dropdown(ids) {
+                window.location.href = `/chat?id=${encodeURIComponent(ids)}`;
+            }
+
+            function redirectToPage_search(search) {
+                    window.location.href = `/search_page?search=${search}`;
+                }
+
+            function handleSubmit() {
+                // Get the value from the input field
+                var searchValue = document.getElementById("search-input-field").value;
+
+                // Pass the value to your function
+                redirectToPage_search(searchValue);
+            }
+
+
+
+
+            </script>
+
+            </div>
+        </div>
+         
+
+        <!-- End of hero-section -->
+
+        <div class="wrapper">
+            
+            <div class="container">
+                <div class="left">
+                    <div class="textclass">
+                        <div class="why">
+                            Why Use <br id="br">
+                            PillChat?<br id="br">
+                        </div>
+                            
+                           
+                            <a href="#" class="btn faq">Go to FAQ Page</a>
+                    </div>
+                    
+                </div>
+                <div class="right">
+                    <div class="grid-container">
+                        <div class="grid-item">
+                            <hr class="black-line">
+                            <img src="{% static 'images/Vector.svg' %}" alt="">
+                            <h3>Instant Medicine Info</h3>
+                            <p>Access reliable medication data directly from patient leaflets with PillChat.</p>
+                        </div>
+                        <div class="grid-item">
+                            <hr class="black-line">
+                            <img src="{% static 'images/AI Assistance.svg' %}" alt="">
+                            <h3>AI Assistance</h3>
+                            <p>Our AI chatbot provides immediate, accurate answers to your medication queries.</p>
+                        </div>
+                        <div class="grid-item">
+                            <hr class="black-line">
+                            <img src="{% static 'images/Multilingual Support.svg' %}" alt="">
+                            <h3>Multilingual Support</h3>
+                            <p>Ask and receive medication information in your preferred language with PillChat.</p>
+                        </div>
+                        <div class="grid-item">
+                            <hr class="black-line">
+                            <img src="{% static 'images/User Friendly.jpg' %}" alt="">
+                            <h3>User-Friendly Design</h3>
+                            <p>Navigate quickly and easily through PillChat's intuitive interface.</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn faq" id="large-faq">Go to FAQ Page</a>
+            </div>
+
+            </div>
+            <!-- End of Why Use PillChat? -->
+
+
+            <div class="cards-container">
+                <div class="c-and-t">
+                    
+                    <div class="top-three">
+                        <div class="card-row">
+                            
+                            <div class="meds">
+
+                                <a href="/chat/?id=02850d0f-ded5-4d27-a377-17bbaa3e70a6" class="meds-top">
+                                    <div class="title-med">Ibuprofen</div>
+                                    <div class="card-image">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="49" height="49" viewBox="0 0 49 49" fill="none">
+                                      <g clip-path="url(#clip0_2047_19)">
+                                        <path d="M32.256 14.254C31.8419 13.84 31.1706 13.84 30.7565 14.254C30.3424 14.6681 30.3424 15.3395 30.7565 15.7535L38.4231 23.4201L8.0334 23.4202C7.43652 23.4201 6.95258 23.904 6.95256 24.501C6.95253 25.098 7.43646 25.5819 8.03344 25.5819L38.4224 25.5819L30.7565 33.2478C30.3424 33.6619 30.3424 34.3333 30.7565 34.7474C31.1705 35.1614 31.8419 35.1614 32.256 34.7474L41.7529 25.2505C42.167 24.8364 42.167 24.165 41.7529 23.7509L32.256 14.254Z" fill="#3CBA54"/>
+                                      </g>
+                                      <defs>
+                                        <clipPath id="clip0_2047_19">
+                                          <rect width="33.9301" height="33.9301" fill="white" transform="translate(24.5078 0.507812) rotate(45)"/>
+                                        </clipPath>
+                                      </defs>
+                                    </svg>
+                                    </div>
+                                    
+                                </a>
+
+                                <ul class="bullet-points" style="display: flex;" >
+                                    <li class="bullet-point">
+                                        <img class="arrow" src="{% static 'images/Arrow.svg' %}" alt="">
+                                        <a href="/chat/?id=02850d0f-ded5-4d27-a377-17bbaa3e70a6&q=A2B" class="card-question">
+                                            How does Ibuprofen work to reduce pain and inflammation?</a>
+                                    </li>
+                                    <li class="bullet-point">
+                                        <img class="arrow" src="{% static 'images/Arrow.svg' %}" alt="">
+                                        <a href="/chat/?id=02850d0f-ded5-4d27-a377-17bbaa3e70a6&q=C7D" class="card-question"> Can I take Ibuprofen while I am pregnant or breastfeeding?</a>
+                                    </li>
+                                    <li class="bullet-point">
+                                        <img class="arrow" src="{% static 'images/Arrow.svg' %}" alt="">
+                                        <a href="/chat/?id=02850d0f-ded5-4d27-a377-17bbaa3e70a6&q=E5F" class="card-question" > What should I do if I accidentally took more Ibuprofen than recommended?</a>
+                                    </li>
+                                </ul>
+                                
+                                
+                            </div>
+                        </div> 
+                        
+                        <div class="card-row">
+                            <div class="meds">
+
+                                <a href="/chat/?id=01437cf0-38a9-4979-b4e3-4d427ae8e45e" class="meds-top">
+                                    <div class="title-med">Metformin</div>
+                                    <div class="card-image">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="49" height="49" viewBox="0 0 49 49" fill="none">
+                                      <g clip-path="url(#clip0_2047_19)">
+                                        <path d="M32.256 14.254C31.8419 13.84 31.1706 13.84 30.7565 14.254C30.3424 14.6681 30.3424 15.3395 30.7565 15.7535L38.4231 23.4201L8.0334 23.4202C7.43652 23.4201 6.95258 23.904 6.95256 24.501C6.95253 25.098 7.43646 25.5819 8.03344 25.5819L38.4224 25.5819L30.7565 33.2478C30.3424 33.6619 30.3424 34.3333 30.7565 34.7474C31.1705 35.1614 31.8419 35.1614 32.256 34.7474L41.7529 25.2505C42.167 24.8364 42.167 24.165 41.7529 23.7509L32.256 14.254Z" fill="#3CBA54"/>
+                                      </g>
+                                      <defs>
+                                        <clipPath id="clip0_2047_19">
+                                          <rect width="33.9301" height="33.9301" fill="white" transform="translate(24.5078 0.507812) rotate(45)"/>
+                                        </clipPath>
+                                      </defs>
+                                    </svg>
+                                    </div>
+                                </a>
+
+                                <ul class="bullet-points">
+                                    <li class="bullet-point">
+                                        <img src="{% static 'images/Arrow.svg' %}" alt="">
+                                        <a href="/chat/?id=01437cf0-38a9-4979-b4e3-4d427ae8e45e&q=G3H" class="card-question">What should I do if I missed a dose of Metformin?</a>
+                                    </li>
+                                    <li class="bullet-point">
+                                        <img src="{% static 'images/Arrow.svg' %}" alt="">
+                                        <a href="/chat/?id=01437cf0-38a9-4979-b4e3-4d427ae8e45e&q=I9J" class="card-question">What are the potential interactions of Metformin with other drugs?</a>
+                                    </li>
+                                    <li class="bullet-point">
+                                        <img src="{% static 'images/Arrow.svg' %}" alt="">
+                                        <a href="/chat/?id=01437cf0-38a9-4979-b4e3-4d427ae8e45e&q=K4L" class="card-question" >How should patients monitor their blood sugar levels while on Metformin?</a>
+                                    </li>
+                                </ul>
+                                
+                                
+                            </div>
+
+                        </div>
+
+                        <div class="card-row">
+                            <div class="meds">
+
+                                <a href="/chat/?id=033c20a9-c298-4185-a48f-0bf8a2ac918a" class="meds-top">
+                                    <div class="title-med">Lisinopril</div>
+                                    <div class="card-image">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="49" height="49" viewBox="0 0 49 49" fill="none">
+                                      <g clip-path="url(#clip0_2047_19)">
+                                        <path d="M32.256 14.254C31.8419 13.84 31.1706 13.84 30.7565 14.254C30.3424 14.6681 30.3424 15.3395 30.7565 15.7535L38.4231 23.4201L8.0334 23.4202C7.43652 23.4201 6.95258 23.904 6.95256 24.501C6.95253 25.098 7.43646 25.5819 8.03344 25.5819L38.4224 25.5819L30.7565 33.2478C30.3424 33.6619 30.3424 34.3333 30.7565 34.7474C31.1705 35.1614 31.8419 35.1614 32.256 34.7474L41.7529 25.2505C42.167 24.8364 42.167 24.165 41.7529 23.7509L32.256 14.254Z" fill="#3CBA54"/>
+                                      </g>
+                                      <defs>
+                                        <clipPath id="clip0_2047_19">
+                                          <rect width="33.9301" height="33.9301" fill="white" transform="translate(24.5078 0.507812) rotate(45)"/>
+                                        </clipPath>
+                                      </defs>
+                                    </svg>
+                                    </div>
+                                </a>
+
+                                <ul class="bullet-points">
+                                    <li class="bullet-point">
+                                        <img src="{% static 'images/Arrow.svg' %}" alt="">
+                                        <a href="/chat/?id=033c20a9-c298-4185-a48f-0bf8a2ac918a&q=M1N" class="card-question">What are the common side effects of Lisinopril?</a>
+                                    </li>
+                                    <li class="bullet-point">
+                                        <img src="{% static 'images/Arrow.svg' %}" alt="">
+                                        <a href="/chat/?id=033c20a9-c298-4185-a48f-0bf8a2ac918a&q=O6P" class="card-question">How should I take Lisinopril if I'm also prescribed a diuretic?</a>
+                                    </li>
+                                    <li class="bullet-point">
+                                        <img src="{% static 'images/Arrow.svg' %}" alt="">
+                                        <a href="/chat/?id=033c20a9-c298-4185-a48f-0bf8a2ac918a&q=Q8R" class="card-question" >What should I do if I experience severe side effects from Lisinopril?</a>
+                                    </li>
+                                </ul>
+                                
+                                
+                            </div>
+
+                        </div>
+                        
+                    </div>
+
+                </div>
+
+                <script >
+document.addEventListener("DOMContentLoaded", function() {
+    let medsContainers = document.querySelectorAll(".meds");
+
+    medsContainers.forEach(function(meds) {
+        meds.style.gap = "31px"
+        meds.addEventListener("mouseover", function() {
+            // Hide all .bullet-points for all .meds containers
+            medsContainers.forEach(function(innerMeds) {
+                let bulletPointList = innerMeds.querySelector(".bullet-points");
+                if (bulletPointList) {
+                    bulletPointList.style.display = "none";
+                }
+            });
+
+            // Show .bullet-points for the currently hovered .meds container
+            let currentBulletPointList = meds.querySelector(".bullet-points");
+            if (currentBulletPointList) {
+                currentBulletPointList.style.display = "flex";
+            }
+        });
+    });
+});
+
+                </script>
+
+</div>
+
+
+
+
+
+            
+              
+            
+            
+        </div>
+        
+        <footer>
+        <div class="bottom-bar">
+                <span>2023 PILLCHAT</span>
+                <span>How To Use</span>
+                <span>Our Mission</span>
+                <span>FAQs</span>
+                <span>Privacy Policy</span>
+                <span>Terms & Conditions</span>
+        </div>
+        </footer>
+            
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Days+One&family=Inter:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+</head>
+
+<body>
+    <header>
+        <div class="wrapper">
+            
+                <script>
+                    // Get a reference to the logo element
+                    const logoElement = document.getElementById('logo');
+
+                    // Add a click event listener to the logo
+                    logoElement.addEventListener('click', function() {
+                        // Redirect to the home page (replace 'home_url' with your actual home page URL)
+                        window.location.href = '/home/';
+                    });
+
+
+                </script>
+
+                
+                
+
+                
+             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            <nav>
+                <ul class="logo">   
+                <li>
+                    <a href="/home/" style="text-decoration: none; color: inherit;">PILLCHAT</a>
+                </li>
+                </ul>
+                <ul class="search-element" id="desk-1">
+                    <form class="form-class" action="{% url 'search_page' %}" method="GET">
+            
+                        <div id="autocompletef" class="autocomplete">
+                        <input id="search-input-field" class="autocomplete-input" type="text" name="search" placeholder="Search Medicine Name..." value="" size="70">
+                          <ul class="autocomplete-result-list"></ul>
+                        </div>
+                        <button type="submit" onclick="handleSubmit()" id="search-button">Search</button>            
+                </form>
+                </ul> 
+                <div class="menu-wrap">
+                    <button class="hamburger">&#9776;</button>
+                    <div class="menu">
+                        <ul class="center">
+                            <li>
+                                <a href="#">How To Use</a>
+                                <hr class="gray-line">
+                            </li>
+                            <li>
+                                <a href="#">Our Mission</a>
+                                <hr class="gray-line">
+                            </li>
+                            <li>
+                                <a href="#">FAQs</a>
+                                <hr class="gray-line">
+                            </li>
+                        </ul>
+                        <ul class="right">
+                            <li>
+                                <a href="#" class="btn log">Log in</a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn reg">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+            </nav>
+        </div>
+    </header>
+
+    <script>
+                document.querySelector('#autocompletef').value = '';
+
+                new Autocomplete('#autocompletef', {
+                search: (input) => {
+                    const url = `/get_names/?search=${input}`;
+                    return new Promise((resolve) => {
+                        fetch(url)
+                            .then((response) => response.json())
+                            .then((data) => {
+                                resolve(data.payload);
+                            });
+                    });
+                },
+                renderResult: (result, props) => {
+                    let group = '';
+                    if (result.index % 3 === 0) {
+                        group = '<li class="group">Group</li>';
+                    }
+                    return `
+                        ${group}
+                        <li ${props} onclick="redirectToPage_dropdown('${result.ids}')">
+                            <div class="wiki-title">
+                                ${result.query}
+                            </div>
+                        </li>
+                    `;
+                },
+            });
+
+            function redirectToPage_dropdown(ids) {
+                window.location.href = `/chat?id=${encodeURIComponent(ids)}`;
+            }
+
+            function redirectToPage_search(search) {
+                    window.location.href = `/search_page?search=${search}`;
+                }
+
+            function handleSubmit() {
+                // Get the value from the input field
+                var searchValue = document.getElementById("search-input-field").value;
+
+                // Pass the value to your function
+                redirectToPage_search(searchValue);
+            }
+        </script>
+
+    <div class="wrapper">
+        <div id="hs" class="hero-section">  
+            <ul class="search-element" id="mobile-1">
+                    <form class="form-class" action="{% url 'search_page' %}" method="GET">
+            
+                        <div id="autocompletef" class="autocomplete">
+                        <input id="search-input-field" class="autocomplete-input" type="text" name="search" placeholder="Search Medicine Name..." value="" size="70">
+                          <ul class="autocomplete-result-list"></ul>
+                        </div>
+                        <button type="submit" onclick="handleSubmit()" id="search-button-mobile1">Search</button>            
+                </form>
+                </ul> 
+            <div class="title">
+                
+                Ask a question, <br> 
+                and get a personalized answer
+            </div>
+            <hr class="gray-line">
+        </div>
+    </div>
+
+    <div id="cc" class="wrapper">
+        <div class="con">
+            <div class="med-title">
+                <div id="name"  >{{ entry.title }}</div>
+                <div id="dosage">Strength / Dosages : {{ entry.strength }}</div>
+                <div id="packager">Packager: {{ entry.labeler }}</div>
+            </div>
+        </div>
+        
+        <div class="interact">
+            <ul id="chat">
+            <div class="chatContainer" id="1">
+                <textarea class="bigInputField" id="bigInputField" placeholder="What do you want to know?"></textarea>
+                <div class="bigDisplayCard" id="bigDisplayCard">
+                    <div class="first-line">
+
+                        <svg id="arr" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M5.69362 11.9997L2.29933 3.2715C2.0631 2.66403 2.65544 2.08309 3.2414 2.28959L3.33375 2.32885L21.3337 11.3288C21.852 11.588 21.8844 12.2975 21.4309 12.6129L21.3337 12.6705L3.33375 21.6705C2.75077 21.962 2.11746 21.426 2.2688 20.8234L2.29933 20.7278L5.69362 11.9997ZM4.4021 4.54007L7.01109 11.2491L13.6387 11.2497C14.0184 11.2497 14.3322 11.5318 14.3818 11.8979L14.3887 11.9997C14.3887 12.3794 14.1065 12.6932 13.7404 12.7428L13.6387 12.7497L7.01109 12.7491L4.4021 19.4593L19.3213 11.9997L4.4021 4.54007Z" fill="#171A20" fill-opacity="0.9"/>
+                        </svg>
+                        <div id="userMessage"></div>
+                    
+                    </div>
+                    
+                    <div class="apiResponse" id="apiResponse"></div>
+
+                    <i id="spinner" class="fas fa-2x fa-spinner fa-spin hidden"></i>
+
+                </div>
+
+                <button class="submit" onclick="submitMessage(this)">Submit</button>
+                <button class="new_chat" style="display: none;" onclick="createNewChat(this)">Ask Something Else</button>
+            </div>
+            </ul>
+        </div>
+        
+            
+
+        </div>
+        
+        
+    </div>
+
+    <footer>
+        <div class="bottom-bar">
+                <span>2023 PILLCHAT</span>
+                <span>How To Use</span>
+                <span>Our Mission</span>
+                <span>FAQs</span>
+                <span>Privacy Policy</span>
+                <span>Terms & Conditions</span>
+        </div>
+        </footer>
+</body>
+
+
+<script>
+                $(document).ready(function() {
+    var $menu = $('.menu');
+
+    $(".hamburger").click(function() {
+        $menu.toggleClass('show'); 
+    });
+
+    // Click event on the document
+    $(document).click(function(event) {
+        // Check if clicked outside the menu and the hamburger button
+        if (!$menu.is(event.target) && $menu.has(event.target).length === 0 && 
+            !$(".hamburger").is(event.target)) {
+            $menu.removeClass('show');
+        }
+    });
+});
+                var nameElement = document.getElementById('name');
+                var differentDiv = document.querySelector('.gray-line');
+
+                // Set the width of #name to match the width of differentDiv
+                nameElement.style.width = differentDiv.length + 'px' +'!important';
+
+                document.addEventListener("DOMContentLoaded", function() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const question_id = urlParams.get('q');
+
+                    if(question_id){
+                        // Retrieve the 'id' parameter from the page URL
+                    
+                    const Questions = {
+                          A2B: 'How does Ibuprofen work to reduce pain and inflammation?',
+                          C7D: 'Can I take Ibuprofen while I am pregnant or breastfeeding?',
+                          E5F: 'What should I do if I accidentally took more Ibuprofen than recommended?',
+
+                          G3H: 'What should I do if I missed a dose of Metformin?',
+                          I9J: 'What are the potential interactions of Metformin with other drugs?',
+                          K4L: 'How should patients monitor their blood sugar levels while on Metformin?',
+                          
+                          M1N: 'What are the common side effects of Lisinopril?',
+                          O6P: 'How should I take Lisinopril if I\'m also prescribed a diuretic?',
+                          Q8R: 'What should I do if I experience severe side effects from Lisinopril?'
+                        };
+
+                    const newContainer = document.querySelector('.chatContainer').cloneNode(true);
+                    document.getElementById(containerCounter).querySelector('.bigInputField').value = Questions[question_id];
+                    const scrollPosition = newContainer.getBoundingClientRect().bottom + window.scrollY + 200;
+                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+
+                    const button = document.querySelector(".submit");
+
+                    // Programmatically click the button
+                    button.click();
+                    }
+                    
+});
+                
+            </script>
+            
+
+            <script>
+                function submitMessage(btn) {
+                    const container = btn.parentElement;
+                    const bigInputField = container.querySelector('.bigInputField');
+                    const bigDisplayCard = container.querySelector('.bigDisplayCard');
+                    const userMessageDiv = bigDisplayCard.querySelector('#userMessage');
+                    const newChatBtn = container.querySelector('.new_chat');
+
+                    document.getElementById(containerCounter).querySelector('.apiResponse').textContent =""
+
+                    document.getElementById(containerCounter).querySelector('.fa-2x').classList.add('fa-spin');
+                    document.getElementById(containerCounter).querySelector('.fa-2x').classList.add('fas');
+                    document.getElementById(containerCounter).querySelector('.fa-2x').classList.add('fa-spinner');
+
+                    // Hide textarea and show bigDisplayCard
+                    bigInputField.style.display = 'none';
+                    bigDisplayCard.style.display = 'block';
+
+                    // Update the userMessage part of the card
+                    const message = document.getElementById(containerCounter).querySelector('.bigInputField').value;
+                    userMessageDiv.textContent = `Question: ${bigInputField.value}`
+
+
+                    // Retrieve the 'id' parameter from the page URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const id = urlParams.get('id');
+
+                    if(userMessage && id) {
+                        const apiUrl = `https://hello-oz32cvdkaq-uc.a.run.app/response/?Message=${encodeURIComponent(message)}&Ids=${id}`;
+
+
+                        fetch(apiUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data && data.response) {
+                                // Insert the response into the apiResponse part of the card
+                                document.getElementById(containerCounter).querySelector('.fa-2x').classList.remove('fa-spin');
+                                document.getElementById(containerCounter).querySelector('.fa-2x').classList.remove('fas');
+                                document.getElementById(containerCounter).querySelector('.fa-2x').classList.remove('fa-spinner');
+                                document.getElementById(containerCounter).querySelector('.fa-2x').classList.add('hidden');
+                                document.getElementById(containerCounter).querySelector('.apiResponse').textContent = data.response;
+
+                            } else {
+                                    alert('Received unexpected data format from API.');
+                            }
+                        })
+                        .catch(error => {
+                        console.error('Error:', error);
+                        });
+
+                        } else {
+                            alert('Please provide a valid message and ensure the ID is present in the URL.');
+                        }
+                        // Show the "Ask Something Else" button
+                        newChatBtn.style.display = 'flex';
+                        btn.style.display = 'none';
+                    }
+
+                let containerCounter = 1;
+
+                function createNewChat(btn){
+                    if(document.getElementById(containerCounter).querySelector('.apiResponse').textContent){
+                        // Increment the counter
+                    containerCounter++;
+
+                    // Clone the chatContainer and reset its state
+                    const container = btn.parentElement;
+                    const ChatBtn = container.querySelector('.new_chat');
+                    ChatBtn.style.display = 'none';
+
+                    const chatUL = document.getElementById('chat');
+                    const newContainer = document.querySelector('.chatContainer').cloneNode(true);
+                    const newBigInputField = newContainer.querySelector('.bigInputField');
+                    const newBigDisplayCard = newContainer.querySelector('.bigDisplayCard');
+                    const newSubmit = newContainer.querySelector('.submit');
+                    const newChatBtn = newContainer.querySelector('.new_chat');
+
+                    
+
+                    newBigInputField.value = '';
+                    newBigInputField.style.display = 'block';
+
+                    newBigDisplayCard.style.display = 'none';
+                    newSubmit.style.display = 'flex';
+                    newChatBtn.style.display = 'none';
+
+                    // Assign a unique ID to the new container
+                    newContainer.id = containerCounter;
+
+                    chatUL.appendChild(newContainer);
+
+                    const scrollPosition = newContainer.getBoundingClientRect().bottom + window.scrollY + 100;
+                    window.scrollTo({ top: scrollPosition, behavior: 'smooth' });                
+                }
+
+                    
+                }
+
+
+            </script>
+
+         
+            <script>
+                function AutoScroll (event) {
+              // Check if the clicked element has the class 'bigInputField'
+              if (event.target.classList.contains('bigInputField')) {
+                // Get the clicked textarea element
+                var textarea = event.target;
+
+                // Calculate the offset and scroll to it
+                var offset = textarea.offsetTop - 100;
+                window.scrollTo({ top: offset, behavior: 'smooth' });
+              }
+            }
+              document.addEventListener('click', AutoScroll);
+            </script>

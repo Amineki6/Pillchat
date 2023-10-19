@@ -1,0 +1,317 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Days+One&family=Inter:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+</head>
+
+<body>
+    <header>
+        <div class="wrapper">
+            
+                <script>
+                    // Get a reference to the logo element
+                    const logoElement = document.getElementById('logo');
+
+                    // Add a click event listener to the logo
+                    logoElement.addEventListener('click', function() {
+                        // Redirect to the home page (replace 'home_url' with your actual home page URL)
+                        window.location.href = '/home/';
+                    });
+                </script>
+
+                
+                
+
+                
+             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            <nav>
+                <ul class="logo">   
+                <li>
+                    <a href="/home/" style="text-decoration: none; color: inherit;">PILLCHAT</a>
+                </li>
+                </ul>
+                <ul class="search-element" id="desk-1">
+                    <form class="form-class" action="{% url 'search_page' %}" method="GET">
+            
+                        <div id="autocompletef" class="autocomplete">
+                        <input id="search-input-field" class="autocomplete-input" type="text" name="search" placeholder="Search Medicine Name..." value="" size="70">
+                          <ul class="autocomplete-result-list"></ul>
+                        </div>
+                        <button type="submit" onclick="handleSubmit()" id="search-button">Search</button>            
+                </form>
+                </ul> 
+                <div class="menu-wrap">
+                    <button class="hamburger">&#9776;</button>
+                    <div class="menu">
+                        <ul class="center">
+                            <li>
+                                <a href="#">How To Use</a>
+                                <hr class="gray-line">
+                            </li>
+                            <li>
+                                <a href="#">Our Mission</a>
+                                <hr class="gray-line">
+                            </li>
+                            <li>
+                                <a href="#">FAQs</a>
+                                <hr class="gray-line">
+                            </li>
+                        </ul>
+                        <ul class="right">
+                            <li>
+                                <a href="#" class="btn log">Log in</a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn reg">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+            </nav>
+        </div>
+    </header>
+        <!-- End of NavBar -->
+
+        <div class="wrapper">
+        <div class="hero-section"> 
+
+        <ul class="search-element" id="mobile-1">
+                    <form class="form-class" action="{% url 'search_page' %}" method="GET">
+            
+                        <div id="autocompletef" class="autocomplete">
+                        <input id="search-input-field" class="autocomplete-input" type="text" name="search" placeholder="Search Medicine Name..." value="" size="70">
+                          <ul class="autocomplete-result-list"></ul>
+                        </div>
+                        <button type="submit" onclick="handleSubmit()" id="search-button-mobile1">Search</button>            
+                </form>
+                </ul> 
+
+            <div class="title">
+                
+                Search Results of: <span id="output"></span>
+           
+            </div>
+            <hr class="gray-line">
+        </div>
+    </div>
+         
+
+        <!-- End of hero-section -->
+
+        <div class="wrapper">
+
+            
+    
+       	<li id="resultsList" class="results-list"></li>
+
+        <div class="page_number"></div> 
+
+        <script>
+                document.querySelector('#autocompletef').value = '';
+
+                new Autocomplete('#autocompletef', {
+                search: (input) => {
+                    const url = `/get_names/?search=${input}`;
+                    return new Promise((resolve) => {
+                        fetch(url)
+                            .then((response) => response.json())
+                            .then((data) => {
+                                resolve(data.payload);
+                            });
+                    });
+                },
+                renderResult: (result, props) => {
+                    let group = '';
+                    if (result.index % 3 === 0) {
+                        group = '<li class="group">Group</li>';
+                    }
+                    return `
+                        ${group}
+                        <li ${props} onclick="redirectToPage_dropdown('${result.ids}')">
+                            <div class="wiki-title">
+                                ${result.query}
+                            </div>
+                        </li>
+                    `;
+                },
+            });
+
+            function redirectToPage_dropdown(ids) {
+                window.location.href = `/chat?id=${encodeURIComponent(ids)}`;
+            }
+
+            function redirectToPage_search(search) {
+                    window.location.href = `/search_page?search=${search}`;
+                }
+
+            function handleSubmit() {
+                // Get the value from the input field
+                var searchValue = document.getElementById("search-input-field").value;
+
+                // Pass the value to your function
+                redirectToPage_search(searchValue);
+            }
+
+
+
+                </script>
+
+
+        <script>
+                     $(document).ready(function() {
+    var $menu = $('.menu');
+
+    $(".hamburger").click(function() {
+        $menu.toggleClass('show'); 
+    });
+
+    // Click event on the document
+    $(document).click(function(event) {
+        // Check if clicked outside the menu and the hamburger button
+        if (!$menu.is(event.target) && $menu.has(event.target).length === 0 && 
+            !$(".hamburger").is(event.target)) {
+            $menu.removeClass('show');
+        }
+    });
+});
+           const currentUrl = new URL(window.location.href);
+
+        	// Extract the "search" parameter from the URL
+    		const searchParam = currentUrl.searchParams.get("search");
+
+        	function fetchNames(input) {
+			    const url = `/get_names/?search=${searchParam}`;
+			    return new Promise((resolve, reject) => {
+			        fetch(url)
+			            .then((response) => {
+			                if (!response.ok) {
+			                    throw new Error('Network response was not ok');
+			                }
+			                return response.json();
+			            })
+			            .then((data) => {
+			                resolve(data.payload);
+			            })
+			            .catch(error => {
+			                reject(error);
+			            });
+			    });
+			}
+
+			function displayNames(input) {
+			    fetchNames(input)
+			        .then(names => {
+			            const resultsList = document.getElementById('resultsList');
+			            // Clear the previous results
+			            resultsList.innerHTML = '';
+                        if (names && names.length) {
+                            names.forEach(name => {
+
+                            // Create the main list item for each name
+                        const mainListItem = document.createElement('li'); // Change this to create an <li> element, not a <ul> element
+
+                        // Create the anchor element
+                        const link = document.createElement('a');
+                        link.href = '/chat?id=' + name.ids;
+
+                        // Create list items for each attribute and append them to the anchor element
+                        const titleItem = document.createElement('li'); // Use <li> or any other appropriate HTML element here
+                        titleItem.textContent = `${name.title}`;
+                        titleItem.classList.add('title-item');  // Add class to titleItem
+                        link.appendChild(titleItem);
+
+                        const doseItem = document.createElement('li'); // Use <li> or any other appropriate HTML element here
+                        doseItem.textContent = `Strength / Dosages : ${name.dose}`;
+                        doseItem.classList.add('dose-item');  // Add class to doseItem
+                        link.appendChild(doseItem);
+
+                        const labelerItem = document.createElement('li'); // Use <li> or any other appropriate HTML element here
+                        labelerItem.textContent = `Labeler : ${name.labeler}`;
+                        labelerItem.classList.add('labeler-item');  // Add class to labelerItem
+                        link.appendChild(labelerItem);
+
+                        // Append the anchor element to the main list item
+                        mainListItem.appendChild(link);
+
+                        // Append the main list item to the results list
+                        resultsList.appendChild(mainListItem);
+
+
+                            const hr = document.createElement('hr');
+                            hr.classList.add('gray-line');
+                            resultsList.appendChild(hr);
+                            });
+                        } else {
+                            const mainListItem = document.createElement('li');
+                            mainListItem.textContent = `No Results`
+                            resultsList.appendChild(mainListItem);
+                        }
+			            
+			            
+			        })
+			        .catch(error => {
+			            console.error('Error fetching names:', error);
+			            // Optionally, you can display an error message on the page
+			        });
+}
+
+
+
+			function getKeywordFromUrl() {
+			    const params = new URLSearchParams(window.location.search);
+			    return params.get('search') || '';  // return keyword or an empty string if it doesn't exist
+			}
+
+			// Execute the search when the page loads
+			window.onload = function() {
+			    const keyword = getKeywordFromUrl();
+			    document.getElementById('output').textContent = keyword;
+			    displayNames(keyword);
+			  
+			};
+
+
+        </script>
+                
+                
+
+            
+              
+            
+            
+        </div>
+        
+        
+        <footer>
+		<div class="bottom-bar">
+                <span>2023 PILLCHAT</span>
+                <span>How To Use</span>
+                <span>Our Mission</span>
+                <span>FAQs</span>
+                <span>Privacy Policy</span>
+                <span>Terms & Conditions</span>
+        </div>
+		</footer>
+
+    <script src="main.js"></script>
+</body>
+
+
+</html>
