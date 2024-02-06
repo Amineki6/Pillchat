@@ -27,7 +27,7 @@ To use PillChat, simply enter the name of your medication into the search bar. O
 **Chatting with PillChat**  
    After selecting your medication, you can start a conversation with the PillChat bot regarding your queries.  
    ![2023-05-09 22_16_39-Window](https://github.com/Amineki6/Pillchat/assets/108744556/be0cd4de-bd4a-488e-9418-97ce2ff0c4a7)
-   *Screenshot description: The user asks, "What are the side effects of Ibuprofen?" PillChat responds with a list of common side effects.*
+   *Screenshot description: The user asks, "How does Ibuprofen works?" PillChat responds with a list of common side effects.*
 
 ### Multilingual Support
 
