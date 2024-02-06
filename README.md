@@ -18,7 +18,8 @@ To use PillChat, simply enter the name of your medication into the search bar. O
 
 1.**Front Page**  
    User-Friendly UI.  
-   ![Search for Medication](Screenshots_Pillchat/2024-02-06 17_05_52-Window.png) *Screenshot description: The user enters "Ibuprofen" into the search bar.*
+   ![2024-02-06 17_05_52-Window](https://github.com/Amineki6/Pillchat/assets/108744556/f37a2d44-9005-47dc-a09e-5acb3c3f63f1)
+ *Screenshot description: The user enters "Ibuprofen" into the search bar.*
    
 2. **Searching for a Medication**  
    Enter the medication name in the search bar.  
