@@ -16,18 +16,18 @@ To use PillChat, simply enter the name of your medication into the search bar. O
 ### Example Interaction
 
 
-1.**Front Page**  
-   User-Friendly UI.  
+ 
    ![2024-02-06 17_05_52-Window](https://github.com/Amineki6/Pillchat/assets/108744556/f37a2d44-9005-47dc-a09e-5acb3c3f63f1)
- *Screenshot description: The user enters "Ibuprofen" into the search bar.*
-   
-2. **Searching for a Medication**  
-   Enter the medication name in the search bar.  
-   ![Search for Medication](path/to/your/search_screenshot.png) *Screenshot description: The user enters "Ibuprofen" into the search bar.*
 
-3. **Chatting with PillChat**  
+   
+
+   ![2023-05-09 22_10_02-Window](https://github.com/Amineki6/Pillchat/assets/108744556/a785ab1a-8e13-4ae3-a624-8829f55cfb0a)
+
+
+**Chatting with PillChat**  
    After selecting your medication, you can start a conversation with the PillChat bot regarding your queries.  
-   ![Chat with PillChat](path/to/your/chat_screenshot.png) *Screenshot description: The user asks, "What are the side effects of Ibuprofen?" PillChat responds with a list of common side effects.*
+   ![2023-05-09 22_16_39-Window](https://github.com/Amineki6/Pillchat/assets/108744556/be0cd4de-bd4a-488e-9418-97ce2ff0c4a7)
+   *Screenshot description: The user asks, "What are the side effects of Ibuprofen?" PillChat responds with a list of common side effects.*
 
 ### Multilingual Support
 
