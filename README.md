@@ -29,9 +29,4 @@ To use PillChat, simply enter the name of your medication into the search bar. O
    ![2023-05-09 22_16_39-Window](https://github.com/Amineki6/Pillchat/assets/108744556/be0cd4de-bd4a-488e-9418-97ce2ff0c4a7)
    *Screenshot description: The user asks, "How does Ibuprofen works?" PillChat responds with a list of common side effects.*
 
-### Multilingual Support
-
-PillChat supports questions and answers in multiple languages. Simply ask your question in your preferred language, and PillChat will respond accordingly.
-
-![Multilingual Example](path/to/your/multilingual_screenshot.png) *Screenshot description: The user asks a question in Spanish, and PillChat provides an answer in Spanish.*
 
